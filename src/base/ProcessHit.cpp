@@ -62,9 +62,10 @@ EventBuffer<Hit> * ProcessHit::handleEvents (EventBuffer<RawHit> *inBuffer)
 			if(useTDC) {
 				float q_T = ( -ct.a1 + sqrtf((ct.a1 * ct.a1) - (4.0f * (ct.a0 - in.tfine) * ct.a2))) / (2.0f * ct.a2) ;
 				out.time = double(in.time) - q_T - ct.t0;
-				if(useTimeOffsetCal)
+				if(useTimeOffsetCal){
 					out.time -= double(cc.t0)/clockPeriod; 
-				
+					out.timeEnd -= double(cc.t0)/clockPeriod;
+				}
 				
 				if(ct.a1 == 0) eventFlags |= 0x2;
 			}
