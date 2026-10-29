@@ -1621,8 +1621,8 @@ class Connection:
 		rx_enables = dict([ ((p,s), self.read_config_register(p, s, 64, 0x0318)) for p, s in uu ])
 
 		while True:
-			rx_deserializers_status = dict([ ((p,s), self.read_config_register(p, s, 64, 0x0302)) for p, s in uu ])
-			rx_decoders_status = dict([ ((p,s), self.read_config_register(p, s, 64, 0x0310)) for p, s in uu ])
+			rx_deserializers_status = dict([ ((p,s), self.read_config_register(p, s, 64, 0x0302) & rx_enables[p,s]) for p, s in uu ])
+			rx_decoders_status = dict([ ((p,s), self.read_config_register(p, s, 64, 0x0310) & rx_enables[p,s]) for p, s in uu ])
 			
 			if (rx_deserializers_status == rx_enables) and (rx_decoders_status == rx_enables):
 				# All ASICs are OK
